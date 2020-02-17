@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -8,7 +9,25 @@ import 'package:flutter_prinder/models/models.dart';
 import 'package:flutter_prinder/presentation/paged_screen.dart';
 import 'package:flutter_prinder/selectors/selectors.dart';
 
-class MainPage extends StatelessWidget {
+
+
+
+class MainPage extends StatefulWidget {
+  @override
+  MainPageSate createState() => MainPageSate();
+}
+
+
+class MainPageSate extends State<MainPage> {
+  final changeNotifier = new StreamController.broadcast();
+
+  @override
+  void dispose() {
+    changeNotifier.close();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, ViewModel>(
@@ -21,8 +40,9 @@ class MainPage extends StatelessWidget {
             Icons.print,
           ],
           pages: <Widget>[
-            new MyHomePage(title: 'Printer Preferences'),
-            new SearchPage(),
+            new MyHomePage(title: 'Printer Preferences',
+                           notifier: changeNotifier.sink),
+            new SearchPage(shouldTriggerChange: changeNotifier.stream),
           ],
         );
       },

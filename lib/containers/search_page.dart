@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -8,7 +9,62 @@ import 'package:flutter_prinder/presentation/search_actions.dart';
 import 'package:flutter_prinder/containers/swipe_strangers.dart';
 import 'package:flutter_prinder/presentation/image_radar.dart';
 
-class SearchPage extends StatelessWidget {
+//class SearchPage extends StatefulWidget {
+//  final Function(BuildContext) builder;
+//  SearchPage({Key key, this.builder}) : super(key: key);
+//
+//  @override
+//  _SearchPage createState() => new _SearchPage();
+//
+//  static SearchPage of(BuildContext context) {
+//    return context.ancestorStateOfType(const TypeMatcher<SearchPage>());
+//  }
+//}
+
+class SearchPage extends StatefulWidget {
+  final Stream shouldTriggerChange;
+
+//  SearchPage({@required this.shouldTriggerChange});
+
+//  final Function(BuildContext) builder;
+
+  const SearchPage(
+      {Key key, @required this.shouldTriggerChange})
+      : super(key: key);
+
+  @override
+  SearchPageState createState() => new SearchPageState();
+
+//  static SearchPageState of(BuildContext context) {
+//    return context.ancestorStateOfType(const TypeMatcher<SearchPageState>());
+//  }
+}
+
+class SearchPageState extends State<SearchPage> {
+  StreamSubscription streamSubscription;
+
+  @override
+  initState() {
+    super.initState();
+    streamSubscription = widget.shouldTriggerChange.listen((_) => rebuild());
+  }
+
+  @override
+  didUpdateWidget(SearchPage old) async {
+    super.didUpdateWidget(old);
+    // in case the stream instance changed, subscribe to the new one
+    if (widget.shouldTriggerChange != old.shouldTriggerChange) {
+      streamSubscription.cancel();
+      streamSubscription = widget.shouldTriggerChange.listen((_) => rebuild());
+    }
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    streamSubscription.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     double imageRadarSize = MediaQuery.of(context).size.width / 4;
@@ -41,6 +97,15 @@ class SearchPage extends StatelessWidget {
         );
       }
     );
+
+    //return widget.builder(context);
+  }
+
+  void rebuild() {
+    print('rebuilding a widget');
+
+    setState(() {});
+    this.build(this.context);
   }
 }
 

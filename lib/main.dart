@@ -11,6 +11,7 @@ import 'package:flutter_prinder/models/models.dart';
 import 'package:flutter_prinder/reducers/app_state_reducer.dart';
 import 'package:flutter_prinder/utils/redux_logging.dart';
 
+
 class MyApp extends StatelessWidget {
   final store = new Store<AppState>(
     appReducer,
