@@ -13,7 +13,7 @@ class UsersService {
       results: 1,
       gender: Gender.male,
       generateImages: true,
-      numberImages: 3
+      numberImages: 1
     ))[0];
   }
 
@@ -21,6 +21,7 @@ class UsersService {
     return loadUsers(
       results: 10,
       gender: Gender.female,
+      numberImages: 4,
     );
   }
 
@@ -29,6 +30,7 @@ class UsersService {
       results: 1,
       gender: Gender.female,
       generateImages: true,
+      numberImages: 4
     );
   }
 
@@ -87,6 +89,63 @@ class UsersService {
 
     return _users;
   }
+
+  static Future<List<UserEntity>> loadPrinters({
+    int results,
+    Gender gender,
+    bool generateImages: false,
+    int numberImages: 5,
+  }) async {
+    assert(generateImages != null);
+    assert(!generateImages || (numberImages == null || numberImages > 0 && numberImages < 7));
+
+    http.Response response = await loadUsersRaw(
+      results: results,
+      gender: gender,
+    );
+
+    List usersData = json.decode(response.body)['results'];
+    Random random = new Random();
+
+    List<UserEntity> _users = [];
+    for (var userData in usersData) {
+      String dob = userData['dob']['date'];
+      int age = (new DateTime.now().difference(DateTime.parse(dob)).inDays / 365).floor();
+
+      Gender _gender;
+      if (userData['gender'].toString().toLowerCase() == 'male') {
+        _gender = Gender.male;
+      } else {
+        _gender = Gender.female;
+      }
+
+      List<String> images = [];
+      if (generateImages) {
+        int _numberImages = numberImages;
+        if (_numberImages == null)
+          _numberImages = random.nextInt(5) + 1;
+        images = await loadImages(
+            results: _numberImages,
+            gender: _gender
+        );
+      } else {
+        images = [userData['picture']['large'] as String];
+      }
+
+      _users.add(new UserEntity(
+        id: userData['id']['value'] as String,
+        name: userData['name']['first'] as String,
+        age: age,
+        description: 'My Description',
+        gender: _gender,
+        images: images,
+        distance: random.nextInt(100),
+      ));
+    }
+
+    return _users;
+  }
+
 
   static Future<List<String>> loadImages({
     @required int results,

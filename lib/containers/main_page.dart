@@ -18,11 +18,13 @@ class MainPage extends StatelessWidget {
           controller: vm.controller,
           indicators: [
             Icons.settings,
-            Icons.print,
-          ],
+            //Icons.print,
+            //Icons.fingerprint,
+            ],
           pages: <Widget>[
             new ProfilePage(),
-            new SearchPage(),
+            //new Search(),
+            //new ProfilePage(),
           ],
         );
       },

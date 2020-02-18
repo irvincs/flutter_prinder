@@ -1,6 +1,7 @@
 import 'package:redux/redux.dart';
 import 'package:flutter_prinder/models/models.dart';
 import 'package:flutter_prinder/utils/formatters.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 AppState stateSelector(Store<AppState> store) => store.state;
 
@@ -31,6 +32,19 @@ String userFirstImageUrlSelector(Store<AppState> store) {
     return images[0];
   return '';
 }
+Future launcher(String url, double lat, double long) async  {
+  if (await MapLauncher.isMapAvailable(MapType.google)){
+    await MapLauncher.launchMap(
+        mapType: MapType.google,
+        coords: Coords(lat, long),
+        title: "Prinder",
+        description: url,
+    );
+  }
+
+  return '';
+}
+
 
 Matchs matchsSelector(Store<AppState> store) => stateSelector(store).matchs;
 

@@ -5,6 +5,7 @@ import 'package:flutter_prinder/models/models.dart';
 import 'package:flutter_prinder/presentation/profile_button.dart';
 import 'package:flutter_prinder/presentation/profile_card.dart';
 import 'package:flutter_prinder/selectors/selectors.dart';
+import 'package:flutter_prinder/containers/search_page.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -68,7 +69,8 @@ class ProfilePage extends StatelessWidget {
                           text: 'Configurations',
                           activeColor: Colors.black26,
                           iconActiveColor: Colors.black38,
-                          onPressed: () => print('Configurations')
+                          //onPressed: () => print('Configurations'),
+                          onPressed: () => _sendDataToSecondScreen(context),
                         ),
                       ),
                       new ProfileButton(
@@ -87,6 +89,15 @@ class ProfilePage extends StatelessWidget {
         );
       }
     );
+  }
+
+  void _sendDataToSecondScreen(BuildContext context) {
+    //String textToSend ="tests";
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Search(),
+        ));
   }
 }
 
