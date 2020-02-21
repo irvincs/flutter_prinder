@@ -57,9 +57,9 @@ class _SwipeCardState extends State<SwipeCard> {
           )
         ],
         image: new DecorationImage(
-            fit: BoxFit.contain,
+            fit: BoxFit.scaleDown,
             image: widget.profile.length > 0
-                ? new NetworkImage(widget.profile[currentImageIndex].image)
+                ? new NetworkImage(widget.profile[currentImageIndex].image, scale: 1.0)
                 : new AssetImage('images/empty.jpg')
         ),
       ),
@@ -118,7 +118,7 @@ class _SwipeCardState extends State<SwipeCard> {
                     makePrinterPresentationName(widget.profile[currentImageIndex]),
                     style: new TextStyle(
                         fontSize: 20.0,
-                        color: Colors.white
+                        color: Colors.black
                     ),
                     overflow: TextOverflow.fade,
                     maxLines: 1,

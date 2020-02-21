@@ -45,6 +45,8 @@ class PrinterEntity {
     String description,
     String image,
     int distance,
+    double latitude,
+    double longitude,
   }) {
     return new PrinterEntity(
       id: id ?? this.id,
@@ -66,12 +68,14 @@ class PrinterEntity {
       'description': description,
       'image': image,
       'distance': distance,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 
   @override
   String toString() {
-    return 'PrinterEntity{id: $id, name: $name, status: $status, description: $description, image: $image, distance: $distance}';
+    return 'PrinterEntity{id: $id, name: $name, status: $status, description: $description, image: $image, distance: $distance, latitude: $latitude, longitude: $longitude}';
   }
 
   @override
@@ -81,7 +85,9 @@ class PrinterEntity {
     status.hashCode ^
     description.hashCode ^
     image.hashCode ^
-    distance.hashCode;
+    distance.hashCode ^
+    latitude.hashCode ^
+    longitude.hashCode;
 
   @override
   bool operator ==(dynamic other) =>
@@ -92,5 +98,7 @@ class PrinterEntity {
     status == other.name &&
     description == other.user &&
     image == other.image &&
-    distance == other.distance;
+    distance == other.distance &&
+    latitude == other.latitude &&
+    longitude == other.longitude;
 }

@@ -106,7 +106,7 @@ class SearchPageState extends State<SearchPage> implements SearchObserverStateLi
     print('request to print a file in $currentImageIndex');
 
     String printIndex = printersSelector(widget.store).printers[currentImageIndex].id;
-    String printCommand = "http://10.194.48.172:8080/print?DeviceId=$printIndex";
+    String printCommand = "http://10.194.48.115:8080/print?DeviceId=$printIndex";
 
     print(printCommand);
 

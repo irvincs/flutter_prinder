@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
       store: store,
       child: new MaterialApp(
         title: 'Prinder',
+        debugShowCheckedModeBanner: false,
         routes: {
           '/': (context) {
             return new StoreBuilder<AppState>(

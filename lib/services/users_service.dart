@@ -48,7 +48,7 @@ class UsersService {
       filter= preferenceSelector(store).preferences[0].getStringFilter();
     }
 
-    String getPrinter = "http://10.194.48.172:8080/get_printers?$filter";
+    String getPrinter = "http://10.194.48.115:8080/get_printers?$filter";
 
     print(getPrinter);
 
@@ -63,7 +63,12 @@ class UsersService {
         status: printerData['status'] as String,
         description: 'My Description',
         image: printerData['image'] as String,
-        distance: random.nextInt(100),
+        distance: random.nextInt(50),
+        //distance: printerData['distance'] as int,
+        latitude: printerData['latitude'] as double,
+        //latitude: 0,
+        longitude: printerData['longitude'] as double,
+        //longitude: 0,
       ));
     }
 
